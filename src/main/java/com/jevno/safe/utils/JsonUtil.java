@@ -52,7 +52,7 @@ public class JsonUtil {
 			return objectMapper.writeValueAsString(obj);
 		} catch (Exception e) {
 			_logger.error("obj2string error:[{}]",e.getMessage());
-			return null;
+			throw new JsonException().setRespEntity(RespEntity.ERROR(ExceptionCodes.OBJECT_TO_JSONSTR_ERROR));
 		}
 	}
 
@@ -72,8 +72,7 @@ public class JsonUtil {
 			objList = objectMapper.readValue(jsonStr, t);
 		} catch (Exception e) {
 			_logger.error("str2list error:[{}]",e.getMessage());
-			RespEntity respEntity = new RespEntity().setStatus(Boolean.FALSE).setCode(ExceptionCodes.INVALID_MODEL_STATUS.key()).setMsg(jsonStr);
-			throw new JsonException().setRespEntity(respEntity);
+			throw new JsonException().setRespEntity(RespEntity.ERROR(ExceptionCodes.SRR_TO_JSON_ERROR));
 		}
 		return objList;
 	}
@@ -92,8 +91,7 @@ public class JsonUtil {
 			obj = objectMapper.readValue(jsonStr, cls);
 		} catch (Exception e) {
 			_logger.error("str2obj error:[{}]",e.getMessage());
-			RespEntity respEntity = new RespEntity().setStatus(Boolean.FALSE).setCode(ExceptionCodes.INVALID_MODEL_STATUS.key()).setMsg(jsonStr);
-			throw new JsonException().setRespEntity(respEntity);
+			throw new JsonException().setRespEntity(RespEntity.ERROR(ExceptionCodes.SRR_TO_JSON_ERROR));
 		}
 		return obj;
 	}

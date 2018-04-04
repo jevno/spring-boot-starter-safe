@@ -37,10 +37,7 @@ public class SecurityUtil {
 			return new String(data);
 		} catch (Exception e) {
 			_logger.error("解密异常！key:{}",key);
-			RespEntity respEntity = new RespEntity().setStatus(Boolean.FALSE)
-					.setCode(null == key ? ExceptionCodes.DECRYPT_NULL_ERROR.key() : ExceptionCodes.DECRYPT_ERROR.key())
-					.setMsg(key);
-			throw new DecryptException().setRespEntity(respEntity);
+			throw new DecryptException().setRespEntity(RespEntity.ERROR(ExceptionCodes.DECRYPT_NULL_ERROR));
 		}
 	}
 
@@ -59,10 +56,7 @@ public class SecurityUtil {
 			return new BASE64Encoder().encode(key);
 		} catch (Exception e) {
 			_logger.error("加密异常！data:{}",data);
-			RespEntity respEntity = new RespEntity().setStatus(Boolean.FALSE)
-					.setCode(null == data ? ExceptionCodes.ENCRYPT_NULL_ERROR.key(): ExceptionCodes.ENCRYPT_ERROR.key())
-					.setMsg(data);
-			throw new EncryptException().setRespEntity(respEntity);
+			throw new EncryptException().setRespEntity(RespEntity.ERROR(ExceptionCodes.ENCRYPT_NULL_ERROR));
 		}
 	}
 
